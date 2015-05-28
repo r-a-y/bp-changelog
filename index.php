@@ -3,7 +3,7 @@
 /** SETTINGS *************************************************************/
 
 // BP version number
-$v = '2.3';
+$v = '2.3.0';
 
 // BP DB version number
 // this is the "db_version" number in /src/bp-loader.php

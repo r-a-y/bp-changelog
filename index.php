@@ -211,9 +211,10 @@ foreach ( pq( 'td.log' ) as $msg ) {
 foreach ( $msgs as $key => $msg ) {
 	// replace relative links with absolute links
 	// replace <tt> tag with <code>
+	// replace BuddyPress Trac wiki links
 	$msg = str_replace(
-		array( 'href="', '<tt>', '</tt>' ),
-		array( 'href="https://buddypress.trac.wordpress.org', '<code>', '</code>' ),
+		array( 'href="', '<tt>', '</tt>', '<a class="wiki" href="https://buddypress.trac.wordpress.org/wiki/BuddyPress">BuddyPress</a>' ),
+		array( 'href="https://buddypress.trac.wordpress.org', '<code>', '</code>', 'BuddyPress' ),
 		$msg
 	);
 

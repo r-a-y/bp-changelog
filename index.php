@@ -2,24 +2,31 @@
 
 /** SETTINGS *************************************************************/
 
+// Parse CLI arguments into the $_GET global.
+if ( isset( $argv ) ) {
+	parse_str( implode( '&', array_slice( $argv, 1 ) ), $_GET );
+}
+
 // BP version number
-$v = '2.3.0';
+$milestone = $_GET['milestone'];
+if ( empty( $milestone ) ) {
+	die( 'Error: Missing "milestone" parameter' );
+}
 
 // BP DB version number
 // this is the "db_version" number in /src/bp-loader.php
-$db = '9848';
+$db = ! empty( $_GET['db'] ) ? $_GET['db'] : 'XXX';
 
-// changesets
-$first_rev = '9443'; // 2.3 begins
-$last_rev  = '9895'; // 2.3 ends
+// Last trac revision for the milestone
+$rev = ! empty( $_GET['rev'] ) ? $_GET['rev'] : 'XXX';
 
 /** OUTPUT ***************************************************************/
 
 ob_start();
 ?>
 
-	<p>Version <?php echo $v; ?> is a major BuddyPress feature release.</p>
-	<p>For Version <?php echo $v; ?>, the database version (_bp_db_version in wp_options) was <?php echo $db; ?>, and the Trac revision was <?php echo $last_rev; ?>. Read the full ticket log here <a href="https://buddypress.trac.wordpress.org/milestone/<?php echo $v; ?>">here</a>.</p>
+<p>Version <?php echo $milestone; ?> is a major BuddyPress feature release.</p>
+<p>For Version <?php echo $milestone; ?>, the database version (_bp_db_version in wp_options) was <?php echo $db; ?>, and the Trac revision was <?php echo $rev; ?>. Read the full ticket log here <a href="https://buddypress.trac.wordpress.org/milestone/<?php echo $milestone; ?>">here</a>.</p>
 
 <!-- highlights -->
 

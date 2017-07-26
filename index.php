@@ -14,6 +14,8 @@ $first_rev = '9443'; // 2.3 begins
 $last_rev  = '9895'; // 2.3 ends
 
 /** OUTPUT ***************************************************************/
+
+ob_start();
 ?>
 
 	<p>Version <?php echo $v; ?> is a major BuddyPress feature release.</p>
@@ -23,211 +25,74 @@ $last_rev  = '9895'; // 2.3 ends
 
 <h2 id="highlights"><a href="#highlights">Highlights</a></h2>
 <ul>
+<li>FILL THIS IN!</li>
 </ul>
 
-<!-- user features -->
+<!-- tickets -->
 
-<h2 id="user-features"><a href="#user-features">User Features</a></h2>
-
-<h3 id="activity"><a href="#activity">Activity</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="administration"><a href="#administration">Administration</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="blogs"><a href="#blogs">Blogs</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="core"><a href="#core">Core</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="friends"><a href="#friends">Friends</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="general"><a href="#general">General</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="groups"><a href="#groups">Groups</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="members"><a href="#members">Members</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="messages"><a href="#messages">Messages</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="notifications"><a href="#notifications">Notifications</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="settings"><a href="#settings">Settings</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="theme"><a href="#theme">Theme</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<!-- dev -->
-
-<h2 id="development-themes-plugins"><a href="#development-themes-plugins">Development, Themes, Plugins</a></h2>
-
-<h3 id="dev-activity"><a href="#dev-activity">Activity</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="dev-administration"><a href="#dev-administration">Administration</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="dev-blogs"><a href="#dev-blogs">Blogs</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="dev-core"><a href="#dev-core">Core</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="dev-friends"><a href="#dev-friends">Friends</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="dev-general"><a href="#dev-general">General</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="dev-groups"><a href="#dev-groups">Groups</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="dev-members"><a href="#dev-members">Members</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="dev-messages"><a href="#dev-messages">Messages</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="dev-notifications"><a href="#dev-notifications">Notifications</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="dev-settings"><a href="#dev-settings">Settings</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<h3 id="dev-theme"><a href="#dev-theme">Theme</a></h3>
-<ul>
-<li></li>
-</ul>
-
-<!-- REMOVE THIS WHEN DONE -->
-
-<hr />
-
-<p><strong>MOVE THE FOLLOWING INTO THE SECTIONS ABOVE</strong> - use your best judgment</p>
-
-<p><strong>MODIFY CONTENT TO SUIT USER CONSUMPTION</strong> (eg. remove "props ...", "see ...", "fixes ..."; merge multiple commits referencing the same ticket; remove commits referencing the older version branch; rephrase or summarize where needed, etc.)</p>
-
-<p><strong>REMOVE THIS BLOCK ONCE YOU'RE DONE</strong></p>
-
-<style type="text/css">
-li {margin-bottom: 1em;}
-ul li {margin-bottom: .5em;}
-</style>
-
-<hr />
-
-<!-- END REMOVE -->
+<h2 id="changes"><a href="#changes">Changes</a></h2>
 
 <?php
-/** PHPQUERY **************************************************************/
+$html = ob_get_clean();
 
-/**
- * Load the phpQuery library.
- *
- * Parse HTML using jQuery syntax.
- *
- * @link https://github.com/phpquery/phpquery
- * @license http://www.opensource.org/licenses/mit-license.php MIT
- */
-require 'phpQuery.php';
+/** PHP DOM WRAPPER ******************************************************/
 
-// parse Trac log
-phpQuery::newDocumentFileHTML( "https://buddypress.trac.wordpress.org/log/?action=stop_on_copy&mode=stop_on_copy&rev={$last_rev}&stop_rev={$first_rev}&limit=999&verbose=on" );
-
-// get all changeset links
-$changesets = array();
-foreach ( pq( 'a.chgset' ) as $changeset ) {
-	// grab changeset number
-	$n = str_replace(
-		array( '/changeset/', '/' ),
-		array( '', '' ),
-		pq( $changeset )->attr( 'href' )
-	);
-
-	$changesets[] = '(<a href="https://buddypress.trac.wordpress.org' . pq( $changeset )->attr( 'href' ) . '">r' . $n . '</a>)';
+if ( false === file_exists( 'vendor/autoload.php' ) ) {
+	die( 'Error: Please run "composer install" before running this script.' );
 }
 
-// get all commit messages
-$msgs = array();
-foreach ( pq( 'td.log' ) as $msg ) {
-	$msgs[] = pq( $msg )->html();
+require 'vendor/autoload.php';
+use DOMWrap\Document;
+
+$dom = new Document();
+$dom->html( file_get_contents( "https://buddypress.trac.wordpress.org/query?status=closed&milestone={$milestone}&group=component&col=id&col=summary&order=priority" ) );
+
+$html .= '<h3 id="activity"><a href="#activity">Activity</a></h3>';
+
+foreach ( $dom->find( 'table.tickets tbody' ) as $i => $elem ) {
+	// Component tickets.
+	$ticket_row = $elem->find( 'td' );
+	if ( $ticket_row->count() ) {
+		$html .= "<ul>\n";
+
+		foreach ( $ticket_row as $j => $row ) {
+			// Ticket number.
+			if ( $row->hasClass( 'id' ) ) {
+				$html .= "\t<li>" . str_replace( 'href="', 'target="_blank" href="https://buddypress.trac.wordpress.org', $row->html() );
+
+			// Ticket title.
+			} elseif ( $row->hasClass( 'summary' ) ) {
+				// Handle backticks and convert to <code> HTML element.
+				$title = strip_tags( $row->html() );
+				$title = str_replace( '`, ', '</code>, ', $title );
+				$title = str_replace( '` ', '</code> ', $title );
+				if ( '`' === substr( $title, -1 ) ) {
+					$title = substr_replace( $title, '</code>', -1, 7 );
+				}
+				$title = str_replace( '`', '<code>', $title );
+
+				$html .= ' - ' . $title . "</li>\n";
+			}
+		}
+
+		$html .= "</ul>\n\n";
+
+	// Component heading.
+	} else {
+		$heading = $elem->find( 'th' );
+		if ( $heading->count() ) {
+			$h = strip_tags( $heading->html() );
+			$h = trim( substr( $h, 0, strpos( $h, '(' ) ) );
+			$h = str_replace( 'Component: ', '', $h );
+
+			$class = filter_var( strtolower( $h ), FILTER_SANITIZE_EMAIL );
+
+			$html .= "<h3 id='{$class}'><a href='#{$class}'>{$h}</a></h3>\n";
+		}
+	}
 }
 
-// iterate commit messages and output!
-foreach ( $msgs as $key => $msg ) {
-	// replace relative links with absolute links
-	// replace <tt> tag with <code>
-	// replace BuddyPress Trac wiki links
-	// replace WordPress Trac wiki links
-	$msg = str_replace(
-		array( 'href="', '<tt>', '</tt>', '<a class="wiki" href="https://buddypress.trac.wordpress.org/wiki/BuddyPress">BuddyPress</a>', '<a class="wiki" href="https://buddypress.trac.wordpress.org/wiki/WordPress">WordPress</a>' ),
-		array( 'href="https://buddypress.trac.wordpress.org', '<code>', '</code>', 'BuddyPress', 'WordPress' ),
-		$msg
-	);
+// Output contents into a .txt file.
+file_put_contents( 'markup.txt', $html );
 
-	// strip breakline tags
-	$msg = strip_tags( $msg, '<p><code><a><ul><li>' );
-
-	// output time!
-	echo '
-<li>' . $msg;
-	// add changeset to the very end of commit msg
-	// handy if you want to keep the changeset in the changelog
-	echo ' ' . $changesets[$key];
-	echo '
-</li>';
-}
+echo 'All done! Check markup.txt and copy that into a codex changelog post!';

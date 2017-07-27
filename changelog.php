@@ -52,7 +52,7 @@ require 'vendor/autoload.php';
 use DOMWrap\Document;
 
 $dom = new Document();
-$dom->html( file_get_contents( "https://buddypress.trac.wordpress.org/query?status=closed&milestone={$milestone}&group=component&col=id&col=summary&order=priority" ) );
+$dom->html( file_get_contents( "https://buddypress.trac.wordpress.org/query?status=closed&milestone={$milestone}&group=component&max=99999&col=id&col=summary&order=priority" ) );
 
 $html .= '<h3 id="activity"><a href="#activity">Activity</a></h3>';
 

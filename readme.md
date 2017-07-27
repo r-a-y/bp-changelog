@@ -20,7 +20,7 @@ Takes all relevant commits from BuddyPress Trac and renders it to a format suita
 
 The parameters are outlined below:
 - (required) `milestone` is the milestone number used on Trac.  Check the [Trac Roadmap](https://buddypress.trac.wordpress.org/roadmap) if you are not sure of the current milestone number.
-- (optional) `db` is the DB version located in `src/bp-loader.php`
+- (optional) `db` is the DB version located in `src/class-buddypress.php`
 - (optional) `rev` is the last Trac revision number before release
 
 Once you have run the script, this will generate a file called `markup.txt` in the same directory.

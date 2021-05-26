@@ -52,8 +52,18 @@ require 'vendor/autoload.php';
 use DOMWrap\Document;
 
 $dom = new Document();
-$dom->html( file_get_contents( "https://buddypress.trac.wordpress.org/query?status=closed&milestone={$milestone}&group=component&max=99999&col=id&col=summary&order=priority" ) );
+$opts = array(
+  'http'=>array(
+    'user_agent' => 'My company name',
+    'method'=>"GET",
+    'header'=> implode("\r\n", array(
+      'Content-type: text/plain;'
+    ))
+  )
+);
 
+$context = stream_context_create($opts);
+$dom->html( file_get_contents( "https://buddypress.trac.wordpress.org/query?status=closed&milestone={$milestone}&group=component&max=99999&col=id&col=summary&order=priority",false, $context ) );
 $html .= '<h3 id="activity"><a href="#activity">Activity</a></h3>';
 
 foreach ( $dom->find( 'table.tickets tbody' ) as $i => $elem ) {

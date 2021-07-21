@@ -48,6 +48,9 @@ if ( false === file_exists( 'vendor/autoload.php' ) ) {
 	die( 'Error: Please run "composer install" before running this script.' );
 }
 
+// Set user agent to bypass 403 Forbidden.
+@ini_set('user_agent','Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101 Firefox/78.0');
+
 require 'vendor/autoload.php';
 use DOMWrap\Document;
 

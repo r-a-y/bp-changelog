@@ -1,5 +1,5 @@
 {
   "require": {
-    "scotteh/php-dom-wrapper": "dev-master"
+    "scotteh/php-dom-wrapper": "2.0.0"
   }
 }

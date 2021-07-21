@@ -26,7 +26,7 @@ ob_start();
 ?>
 
 <p>Version <?php echo $milestone; ?> is a major BuddyPress feature release.</p>
-<p>For Version <?php echo $milestone; ?>, the database version (<code>_bp_db_version</code> in <code>wp_options</code>) was <code><?php echo $db; ?></code>, and the Trac revision was <code><?php echo $rev; ?></code>. Read the full ticket log here <a href="https://buddypress.trac.wordpress.org/milestone/<?php echo $milestone; ?>">here</a>.</p>
+<p>For Version <?php echo $milestone; ?>, the database version (<code>_bp_db_version</code> in <code>wp_options</code>) was <code><?php echo $db; ?></code>, and the Trac revision was <code><?php echo $rev; ?></code>. Read the full ticket log <a href="https://buddypress.trac.wordpress.org/milestone/<?php echo $milestone; ?>">here</a>.</p>
 
 <!-- highlights -->
 
